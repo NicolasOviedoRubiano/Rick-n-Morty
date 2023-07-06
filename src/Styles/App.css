@@ -1,0 +1,16 @@
+.App {
+   width: 100%;
+   height: 100vh;
+   overflow-y: scroll;
+   display: grid;
+   grid-template-columns: 100%;
+   grid-template-rows: 8vw 1fr;
+   flex-direction: column;
+   justify-content: center ;
+   text-align: center;
+   /* background-image: URL(https://rare-gallery.com/mocahbig/391711-rick-and-morty-4k-pc-wallpaper.jpg); */
+   background-image: url(https://www.wallpaperflare.com/static/874/405/132/rick-and-morty-rick-morty-logo-wallpaper.jpg);
+   background-size: 100%;
+   background-repeat: repeat-y;   
+   background-attachment: fixed;
+}
