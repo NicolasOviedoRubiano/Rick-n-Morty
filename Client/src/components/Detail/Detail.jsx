@@ -11,9 +11,9 @@ function Deatil() {
     //código usado cuando se monta la página
     axios(`http://localhost:3001/rickandmorty/character/${id}`).then(
       ({ data }) => {
-        if (data.data.name) {
-          setCharacter(data.data);
-          setOrigin(data.data.origin.name);
+        if (data.name) {
+          setCharacter(data);
+          setOrigin(data.origin.name);
         } else {
           window.alert("No hay personajes con ese ID");
         }

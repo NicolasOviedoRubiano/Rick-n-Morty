@@ -17,10 +17,13 @@ function App() {
   const EMAIL = "prueba@rick.co";
   const PASSWORD = "Prueba97";
   const login = (userData) => {
-    if (userData.email === EMAIL && userData.password === PASSWORD) {
-      setAccess(true);
-      navigate("/home");
-    }
+    const { email, password } = userData;
+    const URL = "http://localhost:3001/rickandmorty/login/";
+    axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
+      const { access } = data;
+      setAccess(data);
+      access && navigate("/home");
+    });
   };
   const logout = () => {
     setAccess(false);
@@ -29,25 +32,27 @@ function App() {
     !access && navigate("/");
   }, [access]);
 
-  const onSearch = (id) => {
+  const onSearch = async (id) => {
     if (charactersId.includes(parseInt(id))) {
       window.alert("El personaje ya existe");
       return;
     }
-    axios(`http://localhost:3001/rickandmorty/character/${id}`)
-      .then(({ data }) => {
-        console.log(data);
-        if (data.data.name) {
-          setCharacters((oldChars) => [...oldChars, data.data]);
-          setCharactersId([...charactersId, data.data.id]);
-        } else {
-          window.alert("¡No hay personajes con este ID!");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        window.alert("No fue posible hacer la solicitud al servidor");
-      });
+    try {
+      const { data } = await axios(
+        `http://localhost:3001/rickandmorty/character/${id}`
+      );
+
+      console.log(data);
+      if (data.name) {
+        setCharacters((oldChars) => [...oldChars, data]);
+        setCharactersId([...charactersId, data.id]);
+      } else {
+        window.alert("¡No hay personajes con este ID!");
+      }
+    } catch (error) {
+      console.log(error);
+      window.alert("No fue posible hacer la solicitud al servidor");
+    }
   };
   const onClose = (id) => {
     setCharacters(
@@ -68,7 +73,7 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={<Form login={login} />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/favorites" element={<Favorites onClose={onClose} />} />
         <Route
           path="/home"
           element={<Cards characters={characters} onClose={onClose} />}

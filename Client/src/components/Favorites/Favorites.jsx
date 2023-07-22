@@ -4,7 +4,7 @@ import Card from "../Cards/Card/Card";
 import styles from "./Favorites.module.css";
 import { filterCards, orderCards } from "../../redux/actions";
 
-function Favorites({ myFavorites }) {
+function Favorites({ myFavorites, onClose }) {
   const [aux, setAux] = useState(false);
   const dispatch = useDispatch();
 
@@ -44,6 +44,7 @@ function Favorites({ myFavorites }) {
               gender={character.gender}
               origin={character.origin}
               image={character.image}
+              onClose={onClose}
             />
           );
         })}

@@ -6,14 +6,15 @@ import { connect } from "react-redux";
 
 function Card(props) {
   const [isFav, setIsFav] = useState(false);
-  const { id, addFav, removeFav, allCharacters } = props;
+  const { id, name, image, species, gender, addFav, removeFav, allCharacters } =
+    props;
   const handleFavorite = () => {
     if (isFav) {
       setIsFav(false);
       removeFav(id);
     } else {
       setIsFav(true);
-      addFav(props);
+      addFav({ id, name, image, species, gender });
     }
   };
 
@@ -28,12 +29,8 @@ function Card(props) {
   return (
     <div className={Styles.divCard}>
       <div className={Styles.frontCard}>
-        <h2 className={Styles.name}>{props.name}</h2>
-        <img
-          className={Styles.characterImage}
-          src={props.image}
-          alt={props.name}
-        />
+        <h2 className={Styles.name}>{name}</h2>
+        <img className={Styles.characterImage} src={image} alt={props.name} />
       </div>
       <div className={Styles.backCard}>
         {isFav ? (
@@ -45,6 +42,9 @@ function Card(props) {
           className={Styles.closeButtom}
           onClick={() => {
             props.onClose(props.id);
+            if (isFav) {
+              handleFavorite();
+            }
           }}
           title="Eliminar personaje"
         >
@@ -53,8 +53,8 @@ function Card(props) {
 
         {/* <h2 className={Styles.informacion}>
                {props.status}</h2> */}
-        <h2 className={Styles.informacion}>{props.species}</h2>
-        <h2 className={Styles.informacion}>{props.gender}</h2>
+        <h2 className={Styles.informacion}>{species}</h2>
+        <h2 className={Styles.informacion}>{gender}</h2>
         <NavLink to={`/detail/${props.id}`} className={Styles.detailLink}>
           <h2 className={Styles.detailButton}>➕ informacion</h2>
         </NavLink>

@@ -1,11 +1,12 @@
-import Card from './Card/Card';
-import styles from './Cards.module.css'
+import Card from "./Card/Card";
+import styles from "./Cards.module.css";
 
 export default function Cards(props) {
-   return <div className={styles.divContenedor}>
-      {props.characters.map((character)=>{
-         return(
-            <Card
+  return (
+    <div className={styles.divContenedor}>
+      {props.characters.map((character) => {
+        return (
+          <Card
             id={character.id}
             key={character.id}
             name={character.name}
@@ -15,8 +16,9 @@ export default function Cards(props) {
             origin={character.origin.name}
             image={character.image}
             onClose={props.onClose}
-            />
-         )
-      })}      
-   </div>;
+          />
+        );
+      })}
+    </div>
+  );
 }

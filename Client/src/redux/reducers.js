@@ -7,28 +7,15 @@ const initialState = {
 export default function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case ADD_FAV:
-      console.log({
-        ...state,
-        allCharacters: [...state.allCharacters, payload],
-      });
-      return {
-        ...state,
-        allCharacters: [...state.allCharacters, payload],
-        myFavorites: [...state.allCharacters, payload],
-      };
+      return { ...state, myFavorites: payload, allCharacters: payload };
     case REMOVE_FAV:
-      const newFavs = state.allCharacters.filter(
-        (ch) => ch.id !== parseInt(payload)
-      );
-      console.log({ ...state, allCharacters: newFavs, myFavorites: newFavs });
-      return { ...state, allCharacters: newFavs };
+      return { ...state, allCharacters: payload, myFavorites: payload };
     case FILTER:
       const filteredCaracther = state.allCharacters.filter(
         (character) => character.gender === payload
       );
       console.log({ ...state, myFavorites: filteredCaracther });
       return { ...state, myFavorites: filteredCaracther };
-
     case ORDER:
       const orderedCharacters = [...state.allCharacters].sort((a, b) => {
         if (payload === "A") {
