@@ -1,10 +1,8 @@
-const http = require("http");
 require("dotenv").config();
 const { PORT } = process.env;
-const { getCharById } = require("./controllers/getCharById");
 const express = require("express");
 const { router } = require("./routes/index");
-const { login } = require("./controllers/login");
+const { conn } = require("./DB_connection");
 // const data = require("./utils/data"); //homework web-services
 //*Servidor levantado con express
 const server = express();
@@ -28,7 +26,16 @@ server.use("/rickandmorty", router);
 //   // login(req,res)
 // });
 
-server.listen(PORT, () => console.log("Servidor corriendo en el puerto 3001"));
+conn
+  .sync({ force: true })
+  .then((value) => {
+    server.listen(PORT, () =>
+      console.log("Servidor corriendo en el puerto 3001")
+    );
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 //*Servidor levantado con HTTP
 // http
